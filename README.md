@@ -1,6 +1,18 @@
-# Typed localStorage
+<p align="center">
+  <img src="./logo.svg" alt="L-Storage Logo" width="200" />
+</p>
 
-A type-safe wrapper around the browser's localStorage API using Zod for runtime validation and TypeScript type inference.
+<h1 align="center">L-Storage</h1>
+
+<p align="center">
+  A type-safe wrapper around the browser's localStorage API using Zod for runtime validation and TypeScript type inference.
+</p>
+
+<p align="center">
+  <a href="https://www.npmjs.com/package/@marcelrsoub/l-storage"><img src="https://img.shields.io/npm/v/@marcelrsoub/l-storage.svg" alt="npm version"></a>
+  <a href="https://github.com/marcelrsoub/l-storage/blob/main/LICENSE"><img src="https://img.shields.io/npm/l/@marcelrsoub/l-storage.svg" alt="license"></a>
+  <img src="https://img.shields.io/bundlephobia/minzip/@marcelrsoub/l-storage" alt="bundle size">
+</p>
 
 ## Features
 
@@ -14,26 +26,44 @@ A type-safe wrapper around the browser's localStorage API using Zod for runtime 
 
 ## Installation
 
-```bash
-npm install typed-local-storage zod
-```
+<details>
+<summary>npm</summary>
 
 ```bash
-pnpm install typed-local-storage zod
+npm install @marcelrsoub/l-storage zod
 ```
+</details>
+
+<details>
+<summary>pnpm</summary>
 
 ```bash
-yarn add typed-local-storage zod
+pnpm add @marcelrsoub/l-storage zod
 ```
+</details>
+
+<details>
+<summary>yarn</summary>
 
 ```bash
-bun add typed-local-storage zod
+yarn add @marcelrsoub/l-storage zod
 ```
+</details>
+
+<details>
+<summary>bun</summary>
+
+```bash
+bun add @marcelrsoub/l-storage zod
+```
+</details>
+
+> **Note:** Zod is a peer dependency and must be installed alongside l-storage.
 
 ## Usage
 
 ```typescript
-import { createTypedStorage } from 'typed-local-storage';
+import { createTypedStorage } from '@marcelrsoub/l-storage';
 import { z } from 'zod';
 
 // Define your storage schema
@@ -100,6 +130,16 @@ Each error includes:
 - `value`: The value that failed
 - `type`: Error type ('validation' | 'parsing' | 'storage')
 
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
 ## License
 
-MIT
+[MIT](LICENSE) © Marcel Soubkovsky

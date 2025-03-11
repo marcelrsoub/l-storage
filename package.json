@@ -1,6 +1,6 @@
 {
-  "name": "typed-local-storage",
-  "version": "0.0.1",
+  "name": "@marcelrsoub/l-storage",
+  "version": "0.0.2",
   "description": "Type-safe wrapper around browser's localStorage API using Zod",
   "type": "module",
   "main": "dist/index.js",
@@ -33,12 +33,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/marcelrsoub/typed-local-storage"
+    "url": "git+https://github.com/marcelrsoub/l-storage.git"
   },
   "bugs": {
-    "url": "https://github.com/marcelrsoub/typed-local-storage/issues"
+    "url": "https://github.com/marcelrsoub/l-storage/issues"
   },
-  "homepage": "https://github.com/marcelrsoub/typed-local-storage#readme",
+  "homepage": "https://github.com/marcelrsoub/l-storage#readme",
   "devDependencies": {
     "@types/node": "^20.8.7",
     "happy-dom": "^17.4.3",

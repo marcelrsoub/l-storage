@@ -1,0 +1,22 @@
+# Source
+src/
+tests/
+
+# Config files
+tsconfig.json
+vitest.config.ts
+.gitignore
+.npmignore
+
+# Development
+node_modules/
+coverage/
+.vscode/
+.idea/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Build process
+tsconfig.tsbuildinfo

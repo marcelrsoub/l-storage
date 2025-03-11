@@ -72,3 +72,66 @@ describe('TypedStorage', () => {
     expect(storage.has('user')).toBe(false);
   });
 });
+
+describe('Default Values', () => {
+  const schemasWithDefaults = {
+    theme: z.enum(['light', 'dark']).default('light'),
+    user: z.object({
+      name: z.string(),
+      age: z.number()
+    }).default({ name: 'Guest', age: 0 }),
+    counter: z.number().default(1),
+    // Add a key without a default
+    preferences: z.object({
+      notifications: z.boolean()
+    })
+  };
+  
+  it('should return default values for non-existent keys', () => {
+    const storage = createTypedStorage(schemasWithDefaults);
+    
+    expect(storage.get('theme')).toBe('light');
+    expect(storage.get('user')).toEqual({ name: 'Guest', age: 0 });
+    expect(storage.get('counter')).toBe(1);
+  });
+  
+  it('should return null for non-existent keys without defaults', () => {
+    const storage = createTypedStorage(schemasWithDefaults);
+    
+    expect(storage.get('preferences')).toBeNull();
+  });
+  
+  it('should return stored values instead of defaults when keys exist', () => {
+    const storage = createTypedStorage(schemasWithDefaults);
+    
+    storage.set('theme', 'dark');
+    storage.set('user', { name: 'John', age: 30 });
+    storage.set('counter', 5);
+    
+    expect(storage.get('theme')).toBe('dark');
+    expect(storage.get('user')).toEqual({ name: 'John', age: 30 });
+    expect(storage.get('counter')).toBe(5);
+  });
+  
+  it('should return default values after removing keys', () => {
+    const storage = createTypedStorage(schemasWithDefaults);
+
+    storage.remove('theme');
+    storage.set('theme', 'dark');
+    storage.remove('theme');
+    
+    expect(storage.get('theme')).toBe('light');
+  });
+  
+  it('should return default values after clearing storage', () => {
+    const storage = createTypedStorage(schemasWithDefaults);
+    
+    storage.set('theme', 'dark');
+    storage.set('user', { name: 'John', age: 30 });
+    
+    storage.clear();
+    
+    expect(storage.get('theme')).toBe('light');
+    expect(storage.get('user')).toEqual({ name: 'Guest', age: 0 });
+  });
+});

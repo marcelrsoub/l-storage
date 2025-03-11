@@ -20,7 +20,7 @@ export interface TypedStorageError extends Error {
 }
 
 export interface TypedStorage<T extends StorageSchema> {
-  get<K extends keyof T>(key: K): z.infer<T[K]> | null;
+  get<K extends keyof T>(key: K): z.infer<T[K]>;
   set<K extends keyof T>(key: K, value: z.infer<T[K]>): void;
   remove(key: keyof T): void;
   clear(): void;

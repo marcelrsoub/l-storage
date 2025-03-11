@@ -1,6 +1,6 @@
 {
   "name": "@marcelrsoub/l-storage",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Type-safe wrapper around browser's localStorage API using Zod",
   "type": "module",
   "main": "dist/index.js",
@@ -50,7 +50,7 @@
     "zod": "^3.22.4"
   },
   "engines": {
-    "node": ">=14.0.0"
+    "node": ">=16.0.0"
   },
   "publishConfig": {
     "access": "public"

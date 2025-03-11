@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./logo.svg" alt="L-Storage Logo" width="200" />
+  <img src="./assets/logo.svg" alt="L-Storage Logo" width="200" />
 </p>
 
 <h1 align="center">L-Storage</h1>
@@ -15,6 +15,13 @@
 </p>
 
 ## Features
+
+<p align="center">
+  <img src="./assets/autocompletion.png" alt="Autocompletion Preview" width="250" />
+</p>
+
+
+
 
 - Type-safe get/set operations using Zod schemas
 - Complete access to all native localStorage methods
@@ -96,6 +103,24 @@ const keys = storage.getRegisteredKeys();
 const hasUser = storage.has('user');
 ```
 
+### Default Values
+
+You can specify default values using Zod's `.default()` method:
+
+```typescript
+const storage = createTypedStorage({
+  theme: z.enum(['light', 'dark']).default('light'),
+  user: z.object({
+    name: z.string(),
+    age: z.number()
+  }).default({ name: 'Guest', age: 0 })
+});
+
+// Now get() will return the default instead of null when key doesn't exist
+const theme = storage.get('theme'); // 'light' instead of null if not set
+const user = storage.get('user');   // { name: 'Guest', age: 0 } instead of null if not set
+```
+
 ## API Reference
 
 ### `createTypedStorage(schemas, options?)`
@@ -111,7 +136,7 @@ Creates a new typed storage instance.
 
 #### Methods
 
-- `get(key)`: Get a value by key (returns null if not found)
+- `get(key)`: Get a value by key (returns the default value if schema has one, otherwise null)
 - `set(key, value)`: Set a value for a key
 - `remove(key)`: Remove a value by key
 - `clear()`: Clear all registered keys

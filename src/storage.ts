@@ -33,17 +33,38 @@ export class TypedStorageImpl<T extends StorageSchema> implements TypedStorage<T
     return error;
   }
 
-  get<K extends keyof T>(key: K): z.infer<T[K]> | null {
+  // Helper method to check if a schema has a default value
+  private hasDefaultValue(schema: z.ZodType): boolean {
+    // @ts-ignore - Accessing internal Zod properties
+    return schema._def.defaultValue !== undefined;
+  }
+
+  // Helper method to get the default value from a schema
+  private getDefaultValue<K extends keyof T>(schema: T[K]): z.infer<T[K]> | null {
+    if (this.hasDefaultValue(schema)) {
+      // @ts-ignore - Accessing internal Zod properties
+      const defaultValue = schema._def.defaultValue();
+      return defaultValue;
+    }
+    return null;
+  }
+
+  get<K extends keyof T>(key: K): z.infer<T[K]> {
     const fullKey = this.getFullKey(key);
     const raw = localStorage.getItem(fullKey);
+    const schema = this.schemas[key];
 
     if (raw === null) {
-      return null;
+      // If the key doesn't exist in localStorage, return the default value if available
+      const defaultValue = this.getDefaultValue(schema);
+      if (defaultValue !== null) {
+        return defaultValue;
+      }
+      return null as any; // Maintain backward compatibility
     }
 
     try {
       const parsed = JSON.parse(raw);
-      const schema = this.schemas[key];
       const result = schema.safeParse(parsed);
 
       if (!result.success) {
@@ -55,7 +76,13 @@ export class TypedStorageImpl<T extends StorageSchema> implements TypedStorage<T
             'validation'
           );
         }
-        return null;
+        
+        // If validation fails, try to return the default value
+        const defaultValue = this.getDefaultValue(schema);
+        if (defaultValue !== null) {
+          return defaultValue;
+        }
+        return null as any; // Maintain backward compatibility
       }
 
       return result.data;
@@ -68,7 +95,13 @@ export class TypedStorageImpl<T extends StorageSchema> implements TypedStorage<T
           'parsing'
         );
       }
-      return null;
+      
+      // If parsing fails, try to return the default value
+      const defaultValue = this.getDefaultValue(schema);
+      if (defaultValue !== null) {
+        return defaultValue;
+      }
+      return null as any; // Maintain backward compatibility
     }
   }
 
